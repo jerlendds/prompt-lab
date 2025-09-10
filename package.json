@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "css": "npx tailwindcss -i ./input.css -o ./src/App.css --minify",
-    "lint": "npx prettier src/ plugin/ --write",
+    "lint": "npx prettier src/ extension/ --write",
     "preview": "vite preview"
   },
   "dependencies": {
