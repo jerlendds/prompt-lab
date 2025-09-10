@@ -30,6 +30,7 @@ More background can be found on my personal site: [studium.dev/tech/prompt-lab](
 - [x] replace react w/ preact
 - [x] update tailwindcss and vite
 - [x] remove the ads
+- [x] remove bullshit dependencies
 - [ ] fix and enhance the core extension
 - [ ] Include button on ChatGPT page to open prompt selection side panel
 - [ ] Simplify themes, ship sane defaults

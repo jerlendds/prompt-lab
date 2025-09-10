@@ -9,6 +9,37 @@ import { ArrowNewWindow, Cog, CollectionIcon, EditedIcon, FingerIcon, HeartIcon,
 import { useState } from "react"
 import SettingsModal from "./SettingsModal.jsx"
 
+function Tag({ children, active, className, disabled, onClick }) {
+  return (
+    <button
+      type="button"
+      disabled={disabled}
+      aria-selected={active ? "true" : undefined}
+      onClick={onClick}
+      className={`inline-flex items-center gap-1.5 rounded-md border border-white/5 bg-white/1 text-zinc-200 px-3 py-1.5 text-xs font-medium",
+        shadow-[inset_0_0_0_1px_rgba(255,255,255,0.02)] transition-colors duration-150 
+        hover:bg-white/3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-beaker-400/60 aria-selected:bg-beaker-500/15 aria-selected:text-beaker-300 aria-selected:border-beaker-500/30
+        disabled:opacity-50 disabled:cursor-not-allowed ${className ?? ''}`}
+    >
+      {children}
+    </button>
+  );
+}
+
+export function TagGhost({ children, active, className, ...props }) {
+  return (
+    <Tag
+      {...props}
+      active={active}
+      className={`border-transparent bg-transparent text-zinc-300
+        hover:bg-dark-800 hover:text-zinc-100
+        aria-selected:bg-teal-500/15 aria-selected:text-beaker-300 aria-selected:border-beaker-500/30 ${className ?? ''}`}
+    >
+      {children}
+    </Tag>
+  );
+}
+
 export default function Sidebar({
   setPrompts,
   setFolders,
@@ -118,16 +149,18 @@ export default function Sidebar({
             {/* Prompt Tags */}
             <ul className="menu px-2 pt-6 text-base-content sticky">
               <h2 className=" font-body uppercase text-drab-800">Tags</h2>
-              <div className=" gap-2 grid grid-cols-2 row-auto">
-                {["All", "Research", "Coding", "Writing", "CLI", "Data Viz"].map(tag => (
-                  <button className="bg-dark-800 rounded py-px">{tag}
-                  </button>
+              <div className="w-full flex flex-wrap items-start content-start gap-1.5">
+                {["All", "Research", "Coding", "Writing", "Unix", "Data Viz"].map((tag, idx) => (
+                  <TagGhost active={idx === 0 ? true : undefined}>
+                    {tag}
+                  </TagGhost>
+        
                 ))}
               </div>
             </ul>
-            {/* Folders */}
-            <ul className="menu px-2 pt-6 text-base-content sticky">
-              <h2 className=" font-body uppercase text-drab-800">Collections</h2>
+            {/* Folders aka collections */}
+            <ul className="menu px-2 pr-4 pt-6 text-base-content flex flex-col sticky gap-y-1.5 overflow-y-scroll">
+              <h2 className="font-body uppercase text-drab-800 group">Collections</h2>
               {folders.map(folder => (
                 <Folder
                   showFolder={true}

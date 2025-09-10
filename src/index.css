@@ -131,3 +131,74 @@
 #root {
   @apply h-screen w-screen;
 }
+
+/* ///////////////////////
+// Start tag styles
+////////////////////////// */
+@layer components {
+  /* Base token-ish pill */
+  .tag {
+    @apply inline-flex items-center gap-1.5
+           rounded-md border border-white/5
+           bg-white/5 text-zinc-200
+           px-3 py-1.5 text-xs font-medium
+           shadow-[0_0_0_1px_rgba(255,255,255,0.02)_inset]
+           transition-colors duration-150;
+  }
+  .tag:hover { @apply bg-white/8; }
+
+  /* Focus-visible ring (teal neon) */
+  .tag:focus-visible {
+    @apply outline-none ring-2 ring-offset-0 ring-teal-400/60;
+  }
+
+  /* Selected/active (data attribute or aria) */
+  .tag[data-state="on"],
+  .tag[aria-pressed="true"],
+  .tag.is-active {
+    @apply bg-teal-500/15 text-teal-300 border-teal-500/30;
+  }
+
+  /* Disabled */
+  .tag:disabled,
+  .tag[data-disabled="true"],
+  .tag.is-disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+
+  /* Ghost (sidebar “All/Research/…” vibe) */
+  .tag-ghost {
+    @apply border-transparent bg-transparent text-zinc-300;
+  }
+  .tag-ghost:hover { @apply bg-white/5 text-zinc-100; }
+  .tag-ghost[data-state="on"] {
+    @apply bg-teal-500/15 text-teal-300 border-teal-500/30;
+  }
+
+  /* Outline (for secondary groupings) */
+  .tag-outline {
+    @apply bg-transparent border-white/10 text-zinc-300;
+  }
+  .tag-outline:hover { @apply border-white/20 bg-white/5; }
+
+  /* Sizes */
+  .tag-xs { @apply px-2 py-0.5 text-[11px] rounded; }
+  .tag-sm { @apply px-2.5 py-1 text-xs; }
+  .tag-lg { @apply px-3.5 py-1.5 text-sm; }
+
+  /* With icon (leading) */
+  .tag-icon > svg,
+  .tag-icon > i { @apply size-3.5 opacity-80; }
+
+  /* With count badge (right-aligned) */
+  .tag .tag-count {
+    @apply ml-1 rounded-sm bg-white/10 px-1 py-0.5 text-[10px] text-zinc-300;
+  }
+  .tag[data-state="on"] .tag-count {
+    @apply bg-teal-500/20 text-teal-100;
+  }
+}
+
+/* ///////////////////////
+// End tag styles
+////////////////////////// */

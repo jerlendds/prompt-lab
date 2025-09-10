@@ -139,7 +139,7 @@ function App() {
             <Logo />
             <div className="flex flex-col items-start justify-end">
               <h2 className="text-slate-200 font-sans font-semibold mt-auto">
-                Prompt<span className="font-light">Lab</span>
+                Prompt<span className="font-extrabold">Lab</span>
               </h2>
               <p className="text-beaker-400 text-nowrap font-body font-normal text-[8px] uppercase">
                 Browser Prompt Library
@@ -148,7 +148,7 @@ function App() {
           </div>
 
           {/* tabs */}
-          <nav className="ml-20 relative bottom-0 gap-x-2 flex items-center text-sm">
+          <nav className="ml-21 relative bottom-0 gap-x-2 flex items-center text-sm">
             {[
               { key: "promptlab-prompts", label: "Prompts" },
               { key: "promptlab-history", label: "History" },
