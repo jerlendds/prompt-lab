@@ -1,32 +1,74 @@
-<a href="https://chrome.google.com/webstore/detail/chatgpt-history/jjdnakkfjnnbbckhifcfchagnpofjffo/"><img src="https://user-images.githubusercontent.com/12115686/206926802-0461dc64-84cd-42de-8c17-74a7ee64528c.png" style="width: 180px !important; height: 50px !important"></a> <a href="https://www.reddit.com/r/ChatGPTPromptGenius/"><img src="https://user-images.githubusercontent.com/12115686/211184170-6aea6981-abd4-447c-bd3d-199d1688011f.png" style="width: 50px !important"></a> <a href="https://ko-fi.com/bennyfi" target="_blank"><img src="https://storage.ko-fi.com/cdn/kofi3.png?v=3" alt="Buy Me A Coffee" style="height: 40px !important;width: 173px !important;" ></a> <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png" style="height: 48px !important"></a>
+<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png" style="height: 48px !important"></a>
 
+```                                                                                      
+        #########                                                                           
+        #########                                                                           
+        ##     ##                                                                           
+        ##     ##                                                                           
+        ##     ##                                                                           
+        ##     ##        #####                                     #           ##           
+       ### ##  ###        #   ##                              ##   #           ##           
+      ###       ###       #   ## ### ###### ######### ###### ##### #     ##### ######       
+     ###      ## ###      #####  #   #    # ##  ##  ####   ## ##   #      #### #    #       
+    ###           ###     #      #   ##  ## ##  ##  ####   ## ##   #    ##  ## ##  ##       
+   ###########    ####   ##      #     ###  ##  ##  #### ##    ### ##### ### # # ###        
+  #####################                               ##                                    
+  #######  ############                                                                     
+  #####################                                                                     
+   ###################                         ~ Introducing PromptLab from jerlendds ⚗️                                   
+                                                                                                    
+```
 
-Prompt Lab is a Firefox extension that allows you to curate a custom library of AI Prompts, upgrade the ChatGPT chat styles, add some additional features to OpenAIs ChatGPT interface, and retrieve and store your ChatGPT history. View [studium.dev/tech/prompt-lab](https://studium.dev/tech/prompt-lab) for more details about my motivation and journey in forking and enhancing this into a Firefox extension.  
+---
 
-## TODO
+Prompt Lab is a Firefox extension for structured prompt management and ChatGPT power-user enhancements.Save, organize, parameterize, and reuse prompts across sessions. Track outcomes. Customize ChatGPT’s interface with radical, hacker-friendly utilities. Retrieve and store your ChatGPT history and more.
+
+More background can be found on my personal site: [studium.dev/tech/prompt-lab](https://studium.dev/tech/prompt-lab)
+
+## Roadmap
 
 - [x] replace react w/ preact
 - [x] update tailwindcss
 - [x] remove the ads
-- [ ] fix the code
-- [ ] remove the themes
-- [ ] be opinionated with sane defaults
-- [ ] build my way better version
-- [ ] to be continued...
+- [ ] fix and enhance the core extension
+- [ ] Include button on ChatGPT page to open prompt selection side panel
+- [ ] Simplify themes, ship sane defaults
+- [ ] Opinionated, hacker-ready version
+- [ ] Prompt Library — Save prompts with parameters, tags, and smart lists.
+- [ ] History & Analytics — Retrieve runs, track usage, and see what works.
+- [ ] ChatGPT Upgrades — Cleaner chat styles, keyboard shortcuts, readability tweaks, and plugin-like enhancements.
+- [ ] Local-first — Runs entirely in your browser. No server round-trips, no ads, no tracking.
+- [ ] use my way better version
+- [ ] ???
+- [ ] profit
+
 
 ## Tech Stack
-- vite
-- preact
-- i18next
-- papaparse
-- remark.js
-- tailwindcss
-- react-toastify
-- firefox extension APIs
+
+```
+vite           → lightning-fast bundler
+preact         → 3kb React alternative
+tailwindcss    → utility-first styling
+i18next        → i18n engine
+papaparse      → CSV handling
+remark.js      → markdown rendering
+react-toastify → toast notifications
+firefox APIs   → extension power
+```
 
 ## Installation
 - Firefox - TODO: ...
-- Chrome - May or may not work, I'm focusing on Firefox support. Trial at your own risk.
+- Chrome - Might work, but unsupported. Install at your own risk.
+
+## Contributing
+
+Issues and PRs welcome. Keep it sharp, keep it hacker-friendly.
+Ideas for new ChatGPT plugins or UX hacks? Open a discussion.
+
+
+## 🕶 Ethos
+
+> No ads. No fluff. Local-first prompts, power, and plugins.
 
 ## License
 Shield: [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa] 
@@ -46,7 +88,7 @@ This work is licensed under a
 ## Original Project 
 
 ```md
-Forked from AI Prompt Genius - https://github.com/benf2004/AI-Prompt-Genius
-@benf2004 - https://github.com/benf2004/ - Original Creator
-View the full list of contributors to the original at https://github.com/benf2004/AI-Prompt-Genius/graphs/contributors
+AI Prompt Genius - https://github.com/benf2004/AI-Prompt-Genius
+@benf2004 - https://github.com/benf2004/ - Creator
+View the full list of contributors at https://github.com/benf2004/AI-Prompt-Genius/graphs/contributors
 ```
