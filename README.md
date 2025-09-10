@@ -38,7 +38,10 @@ More background can be found on my personal site: [studium.dev/tech/prompt-lab](
 - [ ] History & Analytics — Retrieve runs, track usage, and see what works.
 - [ ] ChatGPT Upgrades — Cleaner chat styles, keyboard shortcuts, readability tweaks, and plugin-like enhancements.
 - [ ] Local-first — Runs entirely in your browser. No server round-trips, no ads, no tracking.
-- [ ] use my way better version
+
+## Usage
+
+- [ ] install my way better version
 - [ ] ???
 - [ ] profit
 

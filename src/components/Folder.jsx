@@ -3,11 +3,11 @@ import chevron from "../assets/chevron-down.svg"
 export default function Folder(props) {
   let folder = props.folder
   return (
-    <li id={`folder-${folder}`} data-folder-name={folder}>
-      <a className="flex w-full items-center justify-between" onClick={() => props.onClick()}>
-          {folder}
-
-          {props?.showFolder && <FolderIcon />}
+    <li >
+      <a className="flex w-full pl-1.5 items-center justify-between" onClick={() => props.onClick()}>
+        
+        <span className="mr-auto flex items-center">{props?.icon && props.icon}{folder}</span>
+        {props?.showFolder && <FolderIcon />}
       </a>
     </li>
   )
