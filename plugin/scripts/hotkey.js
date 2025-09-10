@@ -1,108 +1,108 @@
 async function main() {
-    window.activeInput = document.activeElement
-    const prompts = await chrome.storage.local.get({ currentPrompts: [] })
-    document.head.insertAdjacentHTML("beforeend", styles())
-    document.body.insertAdjacentHTML("beforeend", modal(prompts))
-    addEvents()
+  window.activeInput = document.activeElement
+  const prompts = await chrome.storage.local.get({ currentPrompts: [] })
+  document.head.insertAdjacentHTML("beforeend", styles())
+  document.body.insertAdjacentHTML("beforeend", modal(prompts))
+  addEvents()
 }
 
 if (!document.getElementById("modal-pg")) main()
 
 function addEvents() {
-    // Event listener for the search box
-    const searchBox = document.getElementById("searchInput")
-    searchBox.focus()
-    searchBox.addEventListener("input", filterPrompts)
+  // Event listener for the search box
+  const searchBox = document.getElementById("searchInput")
+  searchBox.focus()
+  searchBox.addEventListener("input", filterPrompts)
 
-    // Event listeners for each prompt item to copy text on click
-    const prompts = document.querySelectorAll(".prompt-item")
-    prompts.forEach(prompt => {
-        prompt.addEventListener("click", function () {
-            const text = this.getAttribute("data-text")
-            handlePromptSelection(text)
-        })
+  // Event listeners for each prompt item to copy text on click
+  const prompts = document.querySelectorAll(".prompt-item")
+  prompts.forEach(prompt => {
+    prompt.addEventListener("click", function () {
+      const text = this.getAttribute("data-text")
+      handlePromptSelection(text)
     })
+  })
 
-    // Event listener for arrow keys navigation
+  // Event listener for arrow keys navigation
 
-    document.addEventListener("keydown", keydownEventListener)
+  document.addEventListener("keydown", keydownEventListener)
 
-    document.getElementById("modal-pg").addEventListener("click", function (event) {
-        if (event.target === this) {
-            cleanup()
-        }
-    })
+  document.getElementById("modal-pg").addEventListener("click", function (event) {
+    if (event.target === this) {
+      cleanup()
+    }
+  })
 }
 
 function keydownEventListener(event) {
-    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
-        event.preventDefault()
-        navigatePrompts(event.key)
+  if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+    event.preventDefault()
+    navigatePrompts(event.key)
+  }
+  if (event.key === "Enter") {
+    event.preventDefault()
+    const active = document.activeElement
+    if (active && active.classList.contains("prompt-item")) {
+      active.click()
     }
-    if (event.key === "Enter") {
-        event.preventDefault()
-        const active = document.activeElement
-        if (active && active.classList.contains("prompt-item")) {
-            active.click()
-        }
-    }
+  }
 }
 
 function navigatePrompts(direction) {
-    const prompts = document.querySelectorAll(".prompt-item")
-    const currentIndex = window.pgActivePrompt ?? -1
+  const prompts = document.querySelectorAll(".prompt-item")
+  const currentIndex = window.pgActivePrompt ?? -1
 
-    if (direction === "ArrowDown" && currentIndex < prompts.length - 1) {
-        const nextElement = prompts[currentIndex + 1]
-        window.pgActivePrompt = currentIndex + 1
-        nextElement.focus()
-    } else if (direction === "ArrowUp" && currentIndex > 0) {
-        const prevElement = prompts[currentIndex - 1]
-        window.pgActivePrompt = currentIndex - 1
-        prevElement.focus()
-    }
+  if (direction === "ArrowDown" && currentIndex < prompts.length - 1) {
+    const nextElement = prompts[currentIndex + 1]
+    window.pgActivePrompt = currentIndex + 1
+    nextElement.focus()
+  } else if (direction === "ArrowUp" && currentIndex > 0) {
+    const prevElement = prompts[currentIndex - 1]
+    window.pgActivePrompt = currentIndex - 1
+    prevElement.focus()
+  }
 }
 
 function handlePromptSelection(text) {
-    console.log(text)
-    const variableRegex = /{{(.*?)}}/g
-    let match
-    let variables = []
-    let uniqueVariables = new Set() // Use a Set to ensure uniqueness
+  console.log(text)
+  const variableRegex = /{{(.*?)}}/g
+  let match
+  let variables = []
+  let uniqueVariables = new Set() // Use a Set to ensure uniqueness
 
-    // Extract unique variables from the text
-    while ((match = variableRegex.exec(text)) !== null) {
-        uniqueVariables.add(match[1])
-    }
+  // Extract unique variables from the text
+  while ((match = variableRegex.exec(text)) !== null) {
+    uniqueVariables.add(match[1])
+  }
 
-    // Convert the Set of variables to an Array
-    variables = Array.from(uniqueVariables)
+  // Convert the Set of variables to an Array
+  variables = Array.from(uniqueVariables)
 
-    // If no variables are present, copy text immediately
-    if (variables.length === 0) {
-        copyTextToClipboard(text)
-        cleanup() // Clean up after copying
-    } else {
-        // Create a modal for the variables
-        createVariableModal(variables, text)
-    }
+  // If no variables are present, copy text immediately
+  if (variables.length === 0) {
+    copyTextToClipboard(text)
+    cleanup() // Clean up after copying
+  } else {
+    // Create a modal for the variables
+    createVariableModal(variables, text)
+  }
 }
 
 function modal(prompts) {
-    // Generates HTML for each prompt without inline event handlers
-    const searchPrompts = chrome.i18n.getMessage("searchPrompts")
+  // Generates HTML for each prompt without inline event handlers
+  const searchPrompts = chrome.i18n.getMessage("searchPrompts")
 
-    let promptItems = prompts.currentPrompts
-        .map(
-            (prompt, index) => `
+  let promptItems = prompts.currentPrompts
+    .map(
+      (prompt, index) => `
     <div class="prompt-item" data-text="${prompt.text}" id="prompt-${index}" tabindex="0">
         <div class="prompt-title">${prompt.title}</div>
     </div>
 `,
-        )
-        .join("")
+    )
+    .join("")
 
-    return `
+  return `
         <div id="modal-pg" class="modal-pg">
             <div class="modal-content-pg">
                 <input type="text" autocomplete="off" id="searchInput" placeholder="${searchPrompts}" class="search-input">
@@ -115,7 +115,7 @@ function modal(prompts) {
 }
 
 function styles() {
-    return `
+  return `
     <style>
     /* Modal styling */
 .modal-pg {
@@ -236,63 +236,60 @@ function styles() {
 }
 
 function copyTextToClipboard(text) {
-    window.activeInput.focus()
-    window.activeInput.value = window.activeInput.value + text
-    if (
-        window.location.href.includes("chatgpt.com") &&
-        window.activeInput.id === "prompt-textarea"
-    ) {
-        window.activeInput.style.height = "200px"
-    }
-    setTimeout(() => window.activeInput.focus(), 100)
-    navigator.clipboard.writeText(text).then(
-        function () {
-            //console.log('Async: Copying to clipboard was successful!');
-        },
-        function (err) {
-            console.error("Async: Could not copy text: ", err)
-        },
-    )
+  window.activeInput.focus()
+  window.activeInput.value = window.activeInput.value + text
+  if (window.location.href.includes("chatgpt.com") && window.activeInput.id === "prompt-textarea") {
+    window.activeInput.style.height = "200px"
+  }
+  setTimeout(() => window.activeInput.focus(), 100)
+  navigator.clipboard.writeText(text).then(
+    function () {
+      //console.log('Async: Copying to clipboard was successful!');
+    },
+    function (err) {
+      console.error("Async: Could not copy text: ", err)
+    },
+  )
 }
 
 function filterPrompts() {
-    let input = document.getElementById("searchInput")
-    let filter = input.value.toLowerCase()
-    let promptsContainer = document.getElementById("promptsContainer")
-    let prompts = promptsContainer.getElementsByClassName("prompt-item")
-    let firstVisible = null
+  let input = document.getElementById("searchInput")
+  let filter = input.value.toLowerCase()
+  let promptsContainer = document.getElementById("promptsContainer")
+  let prompts = promptsContainer.getElementsByClassName("prompt-item")
+  let firstVisible = null
 
-    for (let i = 0; i < prompts.length; i++) {
-        let title = prompts[i].getElementsByClassName("prompt-title")[0]
-        if (title.innerText.toLowerCase().indexOf(filter) > -1) {
-            prompts[i].style.display = ""
-            if (!firstVisible) firstVisible = prompts[i]
-        } else {
-            prompts[i].style.display = "none"
-        }
+  for (let i = 0; i < prompts.length; i++) {
+    let title = prompts[i].getElementsByClassName("prompt-title")[0]
+    if (title.innerText.toLowerCase().indexOf(filter) > -1) {
+      prompts[i].style.display = ""
+      if (!firstVisible) firstVisible = prompts[i]
+    } else {
+      prompts[i].style.display = "none"
     }
-    window.pgActivePrompt = -1
+  }
+  window.pgActivePrompt = -1
 }
 
 function createVariableModal(variables, text) {
-    document.getElementById("modal-pg").style.display = "none"
-    const copyStr = chrome.i18n.getMessage("copy").toUpperCase()
-    const enterVal = chrome.i18n.getMessage("enter_val")
+  document.getElementById("modal-pg").style.display = "none"
+  const copyStr = chrome.i18n.getMessage("copy").toUpperCase()
+  const enterVal = chrome.i18n.getMessage("enter_val")
 
-    // Generate HTML for variable inputs
-    let variableInputs = variables
-        .map(
-            variable => `
+  // Generate HTML for variable inputs
+  let variableInputs = variables
+    .map(
+      variable => `
                 <div class="input-group">
                     <label class="input-label" for="input-${variable}">${variable}</label>
                     <textarea id="input-${variable}" placeholder="${enterVal} ${variable}..." class="variable-input"></textarea>
                 </div>
             `,
-        )
-        .join("")
+    )
+    .join("")
 
-    // Create the variable modal HTML
-    let variableModalHTML = `
+  // Create the variable modal HTML
+  let variableModalHTML = `
         <div id="variable-modal" class="variable-modal">
             <div class="variable-modal-content">
                 ${variableInputs}
@@ -301,85 +298,85 @@ function createVariableModal(variables, text) {
         </div>
     `
 
-    // Insert the modal into the DOM
-    document.body.insertAdjacentHTML("beforeend", variableModalHTML)
+  // Insert the modal into the DOM
+  document.body.insertAdjacentHTML("beforeend", variableModalHTML)
 
-    // Focus on the first input
-    document.querySelector(".variable-input").focus()
+  // Focus on the first input
+  document.querySelector(".variable-input").focus()
 
-    // Add event listener for the COPY button
-    document.getElementById("copyButton").addEventListener("click", () => copyVariableText(text))
-    document.getElementById("copyButton").addEventListener("keydown", function (event) {
-        if (event.key === "Enter") {
-            copyVariableText(text)
-        }
+  // Add event listener for the COPY button
+  document.getElementById("copyButton").addEventListener("click", () => copyVariableText(text))
+  document.getElementById("copyButton").addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      copyVariableText(text)
+    }
+  })
+
+  // Add keydown event listener to each textarea to listen for the Enter key
+  document.querySelectorAll(".variable-input").forEach(textarea => {
+    textarea.addEventListener("keydown", function (event) {
+      if (event.key === "Enter" && event.shiftKey) {
+        // Add a newline at the current cursor position
+        const start = this.selectionStart
+        const end = this.selectionEnd
+        this.value = this.value.substring(0, start) + "\n" + this.value.substring(end)
+
+        // Move the cursor to the right position after the newline
+        this.selectionStart = this.selectionEnd = start + 1
+
+        // Prevent the default action to avoid moving to the next element
+        event.preventDefault()
+      } else if (event.key === "Enter" && !event.shiftKey) {
+        // Prevent the default action to avoid a newline in textarea
+        event.preventDefault()
+        // Call the function to copy text
+        copyVariableText(text)
+      }
     })
-
-    // Add keydown event listener to each textarea to listen for the Enter key
-    document.querySelectorAll(".variable-input").forEach(textarea => {
-        textarea.addEventListener("keydown", function (event) {
-            if (event.key === "Enter" && event.shiftKey) {
-                // Add a newline at the current cursor position
-                const start = this.selectionStart
-                const end = this.selectionEnd
-                this.value = this.value.substring(0, start) + "\n" + this.value.substring(end)
-
-                // Move the cursor to the right position after the newline
-                this.selectionStart = this.selectionEnd = start + 1
-
-                // Prevent the default action to avoid moving to the next element
-                event.preventDefault()
-            } else if (event.key === "Enter" && !event.shiftKey) {
-                // Prevent the default action to avoid a newline in textarea
-                event.preventDefault()
-                // Call the function to copy text
-                copyVariableText(text)
-            }
-        })
-    })
+  })
 }
 
 function copyVariableText(text) {
-    let variableValues = {}
-    document.querySelectorAll(".variable-input").forEach(input => {
-        let variableName = input.id.replace("input-", "")
-        variableValues[variableName] = input.value
-    })
+  let variableValues = {}
+  document.querySelectorAll(".variable-input").forEach(input => {
+    let variableName = input.id.replace("input-", "")
+    variableValues[variableName] = input.value
+  })
 
-    console.log(variableValues)
-    console.log(text)
+  console.log(variableValues)
+  console.log(text)
 
-    // Replace variables in the original text and copy to clipboard
-    for (const [variable, value] of Object.entries(variableValues)) {
-        text = text.replace(new RegExp(`{{${variable}}}`, "g"), value)
-    }
+  // Replace variables in the original text and copy to clipboard
+  for (const [variable, value] of Object.entries(variableValues)) {
+    text = text.replace(new RegExp(`{{${variable}}}`, "g"), value)
+  }
 
-    // Copy the text to clipboard
-    copyTextToClipboard(text)
-    // Cleanup after copying
-    cleanup()
+  // Copy the text to clipboard
+  copyTextToClipboard(text)
+  // Cleanup after copying
+  cleanup()
 }
 
 function isInputElement(element) {
-    return element.tagName.toLowerCase() === "input" || element.tagName.toLowerCase() === "textarea"
+  return element.tagName.toLowerCase() === "input" || element.tagName.toLowerCase() === "textarea"
 }
 
 function cleanup() {
-    // Remove the variable modal
-    const variableModal = document.getElementById("variable-modal")
-    if (variableModal) {
-        variableModal.parentNode.removeChild(variableModal)
-    }
+  // Remove the variable modal
+  const variableModal = document.getElementById("variable-modal")
+  if (variableModal) {
+    variableModal.parentNode.removeChild(variableModal)
+  }
 
-    // Remove the search modal if it exists
-    const searchModal = document.getElementById("modal-pg")
-    if (searchModal) {
-        searchModal.parentNode.removeChild(searchModal)
-    }
+  // Remove the search modal if it exists
+  const searchModal = document.getElementById("modal-pg")
+  if (searchModal) {
+    searchModal.parentNode.removeChild(searchModal)
+  }
 
-    // Remove event listeners
-    document.removeEventListener("keydown", keydownEventListener)
-    // Remember to remove any other event listeners you have added
+  // Remove event listeners
+  document.removeEventListener("keydown", keydownEventListener)
+  // Remember to remove any other event listeners you have added
 
-    window.pgActivePrompt = null
+  window.pgActivePrompt = null
 }

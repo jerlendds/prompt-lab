@@ -7,7 +7,7 @@ PLUGIN_DIR=plugin
 DEST_DIR=~/Downloads
 
 # Name of the zip file
-ZIP_FILE=AI_Prompt-Genius_v4_2_8.zip
+ZIP_FILE=PromptLab_v0_0_1.zip
 
 # Zip the directory
 zip -r "$ZIP_FILE" $(basename "$PLUGIN_DIR")

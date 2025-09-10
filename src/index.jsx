@@ -1,13 +1,7 @@
-import React from "react"
-import ReactDOM from "react-dom/client"
+import "preact/debug"
+import { render } from "preact"
 import App from "./App.jsx"
-import ThemeProvider from "./components/ThemeContext.jsx"
 import "./i18n/init"
+import "./index.css"
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-    <React.StrictMode>
-        <ThemeProvider>
-            <App />
-        </ThemeProvider>
-    </React.StrictMode>,
-)
+render(<App />, document.getElementById("root"))

@@ -15,24 +15,24 @@ import { zh_CN } from "./translations/zh_CN.js"
 import { zh_TW } from "./translations/zh_TW.js"
 
 i18next.use(initReactI18next).init({
-    lng: localStorage.getItem("lng") || "en",
-    debug: true,
-    resources: {
-        de: { translation: de },
-        en: { translation: en },
-        es: { translation: es },
-        fr: { translation: fr },
-        hu: { translation: hu },
-        it: { translation: it },
-        pt_BR: { translation: pt_BR },
-        pt_PT: { translation: pt_PT },
-        ru: { translation: ru },
-        tr: { translation: tr },
-        uk: { translation: uk },
-        zh_CN: { translation: zh_CN },
-        zh_TW: { translation: zh_TW },
-    },
-    fallbackLng: ["en"],
+  lng: localStorage.getItem("lng") || "en",
+  debug: true,
+  resources: {
+    de: { translation: de },
+    en: { translation: en },
+    es: { translation: es },
+    fr: { translation: fr },
+    hu: { translation: hu },
+    it: { translation: it },
+    pt_BR: { translation: pt_BR },
+    pt_PT: { translation: pt_PT },
+    ru: { translation: ru },
+    tr: { translation: tr },
+    uk: { translation: uk },
+    zh_CN: { translation: zh_CN },
+    zh_TW: { translation: zh_TW },
+  },
+  fallbackLng: ["en"],
 })
 
 // Add this line to your app entrypoint. Usually it is src/index.js
