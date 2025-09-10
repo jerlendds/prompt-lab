@@ -21,14 +21,14 @@
 
 ---
 
-Prompt Lab is a Firefox extension for structured prompt management and ChatGPT power-user enhancements.Save, organize, parameterize, and reuse prompts across sessions. Track outcomes. Customize ChatGPT’s interface with radical, hacker-friendly utilities. Retrieve and store your ChatGPT history and more.
+Prompt Lab is a Firefox extension for structured prompt management and ChatGPT power-user enhancements. Save, organize, parameterize, and reuse prompts across sessions. Track outcomes. Customize ChatGPT’s interface with radical, hacker-friendly utilities. Retrieve and store your ChatGPT history and more.
 
 More background can be found on my personal site: [studium.dev/tech/prompt-lab](https://studium.dev/tech/prompt-lab)
 
 ## Roadmap
 
 - [x] replace react w/ preact
-- [x] update tailwindcss
+- [x] update tailwindcss and vite
 - [x] remove the ads
 - [ ] fix and enhance the core extension
 - [ ] Include button on ChatGPT page to open prompt selection side panel
