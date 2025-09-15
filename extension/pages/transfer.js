@@ -24,9 +24,9 @@ main()
 
 function sendMessage(msg) {
   const messageStr = JSON.stringify(msg)
-  document
-    .getElementById("window")
-    .contentWindow.postMessage(messageStr, "https://lib.aipromptgenius.app")
+  const frame = document.getElementById("window")
+  if (!frame) return
+  frame.contentWindow.postMessage(messageStr, "*")
   console.log(msg)
   console.log("sent message to child")
 }

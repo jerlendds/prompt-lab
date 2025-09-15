@@ -1,0 +1,53 @@
+{
+  "manifest_version": 2,
+  "name": "__MSG_appName__",
+  "version": "4.2.8",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "permissions": [
+    "identity",
+    "storage",
+    "activeTab",
+    "tabs"
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_popup": "pages/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://chatgpt.com/*"],
+      "js": ["scripts/legacy_hotkey.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "commands": {
+    "open-sidebar": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+U",
+        "mac": "Command+Shift+U"
+      },
+      "description": "__MSG_openSidebar__"
+    },
+    "launch-search": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+P"
+      },
+      "description": "__MSG_launchSearch__"
+    }
+  },
+  "icons": {
+    "16": "icons/16x16.png",
+    "48": "icons/48x48.png",
+    "128": "icons/128x128.png"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "strict_min_version": "91.0"
+    }
+  }
+}
+

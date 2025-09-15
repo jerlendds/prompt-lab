@@ -1,12 +1,12 @@
 {
     "manifest_version": 3,
-    "name": "__MSG_appName__",
+    "name": "prompt-lab",
     "version": "4.2.8",
-    "description": "__MSG_appDesc__",
+    "description": "prompt-lab",
     "default_locale": "en",
     "permissions": ["sidePanel", "identity", "storage", "activeTab", "scripting"],
     "background": {
-        "service_worker": "background.js"
+        "scripts": ["background.js"]
     },
     "action": {
         "default_popup": "pages/popup.html"

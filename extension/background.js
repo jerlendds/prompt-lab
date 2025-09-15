@@ -205,9 +205,15 @@ chrome.commands.onCommand.addListener((command, tab) => {
   }
   if (command === "launch-search") {
     console.log("LAUNCHING SEARCH")
-    chrome.scripting.executeScript({
-      target: { tabId: tab.id },
-      files: ["scripts/hotkey.js"],
-    })
+    if (chrome.scripting && chrome.scripting.executeScript) {
+      chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        files: ["scripts/hotkey.js"],
+      })
+    } else if (chrome.tabs && chrome.tabs.executeScript) {
+      chrome.tabs.executeScript(tab.id, {
+        file: "scripts/hotkey.js",
+      })
+    }
   }
 })

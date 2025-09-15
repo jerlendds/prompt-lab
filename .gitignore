@@ -27,3 +27,4 @@ docs/.obsidian
 *.sln
 *.sw?
 .vite
+AGENTS.md
