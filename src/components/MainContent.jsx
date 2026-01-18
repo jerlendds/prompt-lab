@@ -5,7 +5,6 @@ import { copyTextToClipboard, findVariables, replaceVariables } from "./js/utils
 import { useEffect, useRef, useState } from "react"
 import Toast from "./Toast"
 import CompactToggle from "./CompactToggle.jsx"
-import ReactGA from "react-ga4"
 import { updateProStatus } from "./js/pro.js"
 import { useLocalStorage } from "./useLocalStorage.js"
 

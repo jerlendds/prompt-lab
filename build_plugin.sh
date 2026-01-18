@@ -6,7 +6,7 @@ set -euo pipefail
 PLUGIN_DIR="extension"
 APP_SRC_DIR="dist"
 APP_DEST_DIR="$PLUGIN_DIR/app"
-DEST_DIR=${DEST_DIR:-"$HOME/Downloads"}
+DEST_DIR=${DEST_DIR:-"."}
 NAME_BASE="PromptLab"
 TARGET=${TARGET:-firefox}
 
@@ -22,6 +22,12 @@ SAFE_VER=${VERSION//./_}
 XPI_FILE="${NAME_BASE}_v${SAFE_VER}.xpi"
 
 echo "Building ${XPI_FILE} from ${PLUGIN_DIR}..."
+
+# Bundle content scripts for Firefox MV2 (no module scripts)
+if [[ -f "bundle-content-scripts.js" ]]; then
+  echo "Bundling content scripts..."
+  node bundle-content-scripts.js
+fi
 
 # Ensure Vite app build is available and bundled into extension
 if [[ -d "$APP_SRC_DIR" ]]; then
