@@ -29019,13 +29019,14 @@
         .pg-floating-button {
           display: inline-flex;
           align-items: center;
+          justify-content: center;
           gap: 10px;
-          padding: 12px 16px;
+          padding: 8px 12px;
           border-radius: 999px;
           border: 1px solid rgba(255, 255, 255, 0.06);
           background: rgba(5, 9, 13, 0.92);
           color: var(--pg-light-200);
-          font-size: 13px;
+          font-size: 14px;
           font-weight: 600;
           cursor: pointer;
           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
@@ -29034,19 +29035,18 @@
           display: inline-flex;
           align-items: center;
           gap: 6px;
-          position: relative;
-          top: -2px;
+          justify-content: center;
         }
         .pg-pill-logo {
-          width: 28px;
-          height: 28px;
-          padding: 8px 0 0;
+          width: 26px;
+          height: 26px;
+          padding: 0;
           max-width: 56px;
           object-fit: contain;
         }
         .pg-pill-text {
           display: inline-flex;
-          align-items: flex-end;
+          align-items: center;
           gap: 2px;
           color: #e2e8f0;
           font-family: "Poppins", "Lato", system-ui, sans-serif;
@@ -29398,6 +29398,7 @@
           justify-content: center;
           height: 32px;
           min-width: 42px;
+          border-radius: 999px;
           padding: 0 8px;
           font-size: 11px;
           font-weight: 600;
@@ -29495,9 +29496,14 @@
             align-items: center;
             justify-content: center;
             width: 100%;
+            gap: 6px;
           }
           .pg-save-prompt {
             gap: 6px;
+            border: 1px solid rgba(0, 190, 152, 0.45);
+            padding: 0 10px;
+            height: 32px;
+            border-radius: 999px;
           }
           .pg-save-prompt svg {
             width: 14px;
@@ -29505,15 +29511,29 @@
           }
           .pg-save-prompt:hover {
             color: var(--pg-beaker-300);
+            background: rgba(0, 190, 152, 0.16);
           }
           .pg-copy-links span {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             width: 100%;
+            gap: 6px;
           }
           .pg-copy-links {
             gap: 6px;
+            border: 1px solid rgba(0, 190, 152, 0.45);
+            padding: 0 10px;
+            height: 32px;
+            border-radius: 999px;
+          }
+          .pg-copy-links svg {
+            width: 14px;
+            height: 14px;
+          }
+          .pg-copy-links:hover {
+            color: var(--pg-beaker-300);
+            background: rgba(0, 190, 152, 0.16);
           }
           .pg-copy-links svg {
             width: 14px;
@@ -29528,6 +29548,7 @@
         copyButtons.forEach((copyBtn) => {
           const actionRow = copyBtn.parentElement;
           if (!actionRow || actionRow.querySelector(".pg-save-prompt")) return;
+          actionRow.style.gap = "8px";
           const article = copyBtn.closest("article");
           const messageEl = article?.querySelector("[data-message-id]");
           if (!messageEl) return;
@@ -29752,13 +29773,13 @@
         color: var(--pg-beaker-300) !important;
       }
       [data-testid="webpage-citation-pill"] a {
-        background: rgba(0, 190, 152, 0.12) !important;
-        border: 1px solid rgba(0, 190, 152, 0.25) !important;
+        background: var(--pg-dark-900) !important;
+        border: 1px solid rgba(0, 190, 152, 0.35) !important;
         color: var(--pg-light-100) !important;
       }
       .dark\\:bg-\\[\\#303030\\]\\!:where(.dark, .dark *):not(:where(.dark .light, .dark .light *)) {
-        background-color: rgba(0, 190, 152, 0.12) !important;
-        border: 1px solid rgba(0, 190, 152, 0.25) !important;
+        background-color: var(--pg-dark-900) !important;
+        border: 1px solid rgba(0, 190, 152, 0.35) !important;
       }
       #stage-slideover-sidebar {
         background-color: var(--pg-dark-900) !important;
@@ -30252,11 +30273,29 @@ ${codeText2}
     function applyPromptToInput(promptText) {
       const chatInput2 = document.getElementById("prompt-textarea");
       if (!chatInput2) return;
-      const existing = chatInput2.value || "";
+      const isEditable = chatInput2.isContentEditable;
+      const existing = isEditable ? chatInput2.textContent || "" : chatInput2.value || chatInput2.textContent || "";
       const separator = existing.trim().length > 0 ? "\n" : "";
-      chatInput2.value = `${existing}${separator}${promptText}`;
-      chatInput2.dispatchEvent(new Event("input", { bubbles: true }));
+      const nextValue = `${existing}${separator}${promptText}`;
       chatInput2.focus();
+      if (isEditable) {
+        try {
+          const selection = window.getSelection();
+          if (selection) {
+            selection.selectAllChildren(chatInput2);
+            selection.collapseToEnd();
+          }
+          document.execCommand("insertText", false, nextValue);
+        } catch (error) {
+          chatInput2.textContent = nextValue;
+        }
+        chatInput2.dispatchEvent(
+          new InputEvent("input", { bubbles: true, inputType: "insertText", data: promptText })
+        );
+      } else {
+        chatInput2.value = nextValue;
+        chatInput2.dispatchEvent(new Event("input", { bubbles: true }));
+      }
     }
     function removeSuggestion() {
       const suggestionElement = document.querySelector(".suggestions");
